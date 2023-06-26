@@ -9,7 +9,7 @@ app.use("/halls", hallRouter);
 app.use("/customers", customerRouter);
 
 app.get('/', function (req, res) {
-    res.send({msg: "Port running successfully in 5000"})
+    res.send('<h4>Postman Pusblished Doc: <a href="https://documenter.getpostman.com/view/20660257/2s93z87Ntw" target="_blank">https://documenter.getpostman.com/view/20660257/2s93z87Ntw</a></h4>')
   })
   
   app.listen(3000)
