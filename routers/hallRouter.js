@@ -108,12 +108,13 @@ hallRouter.post("/newBooking", async (req, res) => {
         //console.log(formattedHallookingObj);
         const {isAvailable, msg, list}=checkAvailability(formattedHallookingObj);
         if(isAvailable){
-          bookings.push({
+          formattedHallookingObj = {
             ...formattedHallookingObj,
             bookingId: `${hallBookingObj.userName}_${Date.now().toString()}`,
             bookedAt: new Date().toString(),
             status: "Pending"
-          });
+          }
+          bookings.push(formattedHallookingObj);
           //console.log(halls, bookings);
           customers.filter((data) => data.userName === formattedHallookingObj.userName).map((data) => {data.bookings.push(formattedHallookingObj)})
           halls.filter((data) => data.roomId === formattedHallookingObj.roomId).map((data) => {data.bookings.push(formattedHallookingObj)})
