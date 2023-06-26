@@ -97,12 +97,12 @@ hallRouter.get("/getAllBookings", async (req, res) => {
 hallRouter.post("/newBooking", async (req, res) => {
     const { body:hallBookingObj } = req;
     let checkUser = customers.filter((data)=> data.userName === hallBookingObj.userName).length > 0 ? {isValid: true, msg:"Valid User"}: {isValid: false, msg:"User not found"} 
-    //console.log(checkUser);
+    let checkHall = halls.filter((data)=> data.roomId === hallBookingObj.roomId).length > 0 ? {isValid: true, msg:"Valid Hall"}: {isValid: false, msg:"Hall not found, Please enter the valid Room ID"} 
     let emptyCheck = checkNonEmpty(hallBookingObj);
     let dateCheck = checkDate(hallBookingObj.date);
     let timeCheck = checkTime([hallBookingObj.startTime, hallBookingObj.endTime], new Date(hallBookingObj.date));
-    if(!checkUser.isValid || !emptyCheck.isValid || !dateCheck.isValid || !timeCheck.isValid){
-      res.status(400).send({msg: !checkUser.isValid ? checkUser.msg : !emptyCheck.isValid ? emptyCheck.msg : !dateCheck.isValid ? dateCheck.msg : !timeCheck.isValid? timeCheck.msg:''});
+    if(!checkHall.isValid || !checkUser.isValid || !emptyCheck.isValid || !dateCheck.isValid || !timeCheck.isValid){
+      res.status(400).send({msg: !checkHall.isValid ? checkHall.msg : !checkUser.isValid ? checkUser.msg : !emptyCheck.isValid ? emptyCheck.msg : !dateCheck.isValid ? dateCheck.msg : !timeCheck.isValid? timeCheck.msg:''});
     }else{
         let formattedHallookingObj = {...hallBookingObj, date: dateCheck.date.toString(), startTime: timeCheck.startTime, endTime: timeCheck.endTime}
         //console.log(formattedHallookingObj);
